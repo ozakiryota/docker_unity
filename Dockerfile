@@ -32,10 +32,12 @@ RUN apt-get update && \
 	sed -i 's/^\(.*DISPLAY=:.*XAUTHORITY=.*\)\( "\$@" \)2>&1$/\1\2/' /usr/bin/xvfb-run && \
 	echo '#!/bin/bash\nxvfb-run -a /opt/unityhub/unityhub-bin --no-sandbox --headless "$@" 2>/dev/null' > /usr/bin/unityhub-root && \
 	chmod +x /usr/bin/unityhub-root && \
-	mkdir -p $home_dir/Unity/Hub/Editor && \
-	unityhub-root install-path --set "$home_dir/Unity/Hub/Editor" && \
+	mkdir -p /opt/UnityHubEditor && \
+	unityhub-root install-path --set "/opt/UnityHubEditor" && \
 	unityhub-root install --version $editor_version && \
-	unityhub-root install-modules --version $editor_version --module webgl --childModules
+	unityhub-root install-modules --version $editor_version --module webgl --childModules && \
+	mkdir -p $home_dir/Unity/Hub && \
+	ln -s /opt/UnityHubEditor $home_dir/Unity/Hub/Editor
 ## Requirements
 RUN apt-get update && \
 	apt-get install -y \
