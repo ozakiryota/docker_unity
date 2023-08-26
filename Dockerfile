@@ -26,7 +26,7 @@ RUN apt-get update && \
 		libgbm-dev \
 		firefox
 ## Editor
-ARG editor_version=2022.3.7f1
+ARG editor_version=2022.3.8f1
 RUN apt-get update && \
 	apt-get install -y xvfb && \
 	sed -i 's/^\(.*DISPLAY=:.*XAUTHORITY=.*\)\( "\$@" \)2>&1$/\1\2/' /usr/bin/xvfb-run && \
@@ -34,7 +34,8 @@ RUN apt-get update && \
 	chmod +x /usr/bin/unityhub-root && \
 	mkdir -p $home_dir/Unity/Hub/Editor && \
 	unityhub-root install-path --set "$home_dir/Unity/Hub/Editor" && \
-	unityhub-root install --version $editor_version
+	unityhub-root install --version $editor_version && \
+	unityhub-root install-modules --version $editor_version --module webgl --childModules
 ## Requirements
 RUN apt-get update && \
 	apt-get install -y \
