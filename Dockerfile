@@ -35,6 +35,11 @@ RUN apt-get update && \
 	mkdir -p $home_dir/Unity/Hub/Editor && \
 	unityhub-root install-path --set "$home_dir/Unity/Hub/Editor" && \
 	unityhub-root install --version $editor_version
+## Requirements
+RUN apt-get update && \
+	apt-get install -y \
+		libglu1 \
+		libgconf-2-4
 ########## Initial Position ##########
 WORKDIR $home_dir
 CMD ["bash"]
